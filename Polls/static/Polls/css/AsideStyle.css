@@ -1,0 +1,36 @@
+
+
+.LeftNavigation {
+    background-color: rgb(48, 45, 45);
+    padding: 0;
+    width: auto;
+    height:100vh;
+    margin-left:0px ;
+}
+
+
+.LeftNavigation li {
+    list-style-type: none; 
+}
+
+.fixHeadAndNavBar {
+    position: fixed;
+}
+
+
+
+.buttonNavbar  {
+    color:white;
+    width: 100%;
+    text-align: left;
+    background-color: #302d2d;
+    border: none;
+    padding: 10px;
+
+}
+
+.buttonNavbar:hover {
+    background-color: white;
+    color: black;
+}
+

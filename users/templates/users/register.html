@@ -1,0 +1,79 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+{% block title %}
+
+    Зарегистрировать Акаунт
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Создать аккаунт</h5>
+
+    
+    <form class="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            
+            <div class="input-group mb-3 col-6">
+
+                <input name='firstName'  type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Firstname">
+            </div>
+            
+            <div class="input-group mb-3 col-6">
+               <input name = 'LastName' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Last Name">
+            </div>
+            
+            <div class="input-group mb-3 col-6">
+                <input name = 'UserName' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="User Name">
+            </div>
+            
+            
+            
+            <div class="input-group mb-3 col-6">
+                <input name ='email' type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="email">
+            </div>
+            
+            <h3 class = 'col-12 text-center bg-danger '>{{ Wrong_Password }}</h3>
+            
+            <div class="input-group mb-3 col-6">
+
+                <input name = 'password1' type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="password">
+            </div>
+            
+            
+            <div class="input-group mb-3 col-6">
+                <input name =  'password2' type="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Confirm passowrd">
+            </div>
+            
+            
+            
+            
+            
+        </div>
+        
+        <button class = 'btn btn-success col-4 m-auto ' type="submit" name="button" value = 'save' style="
+    
+    display: block;
+    
+    
+    " >Register</button>
+  </form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+  
+  {% endblock %}

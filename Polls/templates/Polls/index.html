@@ -1,0 +1,73 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+
+
+
+{% block title %}
+
+  Главная страница
+
+{% endblock %}
+
+
+
+
+{% block content  %}
+
+
+{% load mptt_tags %}
+
+
+<form action="/"  class = "fixHeadAndNavBar">
+    <ul class = " LeftNavigation position-fixed ">
+            <input type="text" placeholder="Search.." name="sq">
+            <button type="submit"><i class="fa fa-search"></i></button>
+    
+        <li><button name="genreId" value = "0" class="buttonNavbar" >Все</button></li>   
+        <ul class = 'text-light'>
+          {% recursetree genres %}
+              <li>
+                  <button name = 'genreId'  value = '{{ node.id }}' class = 'buttonNavbar'>  {{ node.title }} </button>
+                  {% if not node.is_leaf_node %}
+                      <ul class="children">
+                          {{ children }} 
+                      </ul>
+                  {% endif %}
+              </li>
+          {% endrecursetree %}
+      </ul>
+        
+        
+    </ul>
+</form>
+
+  <div class="container">
+    <h1>{{ NoneInbooks }}</h1>
+    <div class = 'row justify-content-md-center'>
+    {% for book in books %}
+    <div class="card col-3 mb-3 m-2 text-center " >
+      {% if book.image %}
+          <img class="rounded card-img-top " src="{{ book.image.url}}" alt="Card image cap" style="width:100%">
+      {% else %}
+        <div class="EmptyImagePlace"></div>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">Название: {{ book.title }}</h5>
+        <p class="card-text">Описание:{{ book.description|truncatewords:20  }}</p>
+    
+    
+    
+    
+        <p>авторы:</p>
+        {% for auth in book.Author.all %}
+          <p>{{ auth.Name }}</p>
+        {% endfor %}
+        <a href="/Book/{{book.slug}}" class="btn btn-primary">Подробнее</a>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+    
+
+{% endblock %}

@@ -1,0 +1,84 @@
+
+
+
+<html lang="en">
+
+<head>
+
+  {% load static %}
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{%  static 'Polls/css/AsideStyle.css'  %}">
+  <link rel="stylesheet" href="{% static 'Polls/css/TopBar.css' %}">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>
+
+   {% block title %} 
+
+ Да да это главная страница 
+
+   {% endblock %}
+
+  </title>
+</head>
+
+<body>
+
+
+  <style>
+    body {
+      background-image: url(https://images.unsplash.com/photo-1569982175971-d92b01cf8694?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&w=1000&q=80) !important;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+  </style>
+
+
+
+  <nav class="site-header sticky-top py-1 bg-dark ">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+
+        <h3> <i class="far fa-book" style="color:#806eaf"></i> </h1> 
+   
+  
+      <a class=" Navlinks" href="{% url 'HomeUrl' %}">Home</a>
+      <a class="Navlinks" href="#">Books</a>
+      <a class="Navlinks" href="#">Authors</a>
+      <a class="Navlinks" href="#">Genres</a>
+      <a class="Navlinks" href="#">log in</a>
+    </div>
+  </nav>
+
+
+
+
+  {% block content %}
+
+  <h1>Иди нахуй</h1>
+
+  {% endblock %}
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

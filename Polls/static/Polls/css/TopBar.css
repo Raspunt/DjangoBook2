@@ -1,0 +1,12 @@
+
+
+.Navlinks {
+    color: white;
+    padding: 10px; 
+}
+
+
+.Navlinks:hover{
+    background-color:rgb(31, 21, 46) ;
+    color: rgb(196, 126, 86);
+}
