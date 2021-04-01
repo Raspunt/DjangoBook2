@@ -14,60 +14,85 @@
 {% block content %}
 
 
-<div class="card container mt-5">
+<div class="card container mt-5 BigDiv">
     <div class="card-body">
-     
-    <img src="/media/{{ book.image }}" alt="" srcset="" class="float-left" style=
-    "
-    width: 400px;
+
+        <div class = "ImageBody row">
+
+            <img src="/media/{{ book.image }}" alt="" srcset="" class="" >
+            
+                <div class = 'col-md-7'>    
+                    <h1 >{{ book.title }}</h1>
+                
+                    <h3 >авторы: </h3>
+                
+                    <p>
+                        {% for aut in book.Author.all %}
+                          <a href="/Author/{{ aut.slug }}"> {{ aut.Name }} </a>
+                            <br>
+                        {% endfor %}    
+                    </p>
+
+                    {% for star in CheckStars %}
+                        <span class="fa fa-star checked"></span>
+                    {% endfor %}
+
+                    {% for star in UnCheckStars %}
+                        <span class="fa fa-star"></span>
+                    {% endfor %}
+                
+                    
+                    <h1 class = 'text-center'>О книге</h1>   
+                    
+                    <hr>
+                    <p>{{ book.description|safe }}</p>
+
+                    <hr>
+
+                    {% for genre in book.genreTree.all %}
+                            <p><i class="far fa-check"></i>  {{ genre.title }}</p>         
+                            <br>
+                    {% endfor %}    
+                </div>
+                
+   
+    </div>
+        
     
-    ">
-
-    <p>Название :{{ book.title }}</p>
-    
-    <p>авторы:  
-    {% for aut in book.Author.all %}
-        {{ aut.Name }}
-    {% endfor %}
-    </p>
-    <p>{{ book.description }}</p>
-
-    <h1>Добавить коментарий</h1>
-
+  
+<div class = "comments">
+    <h1>Добавить коментарий </h1>
     <form action="" method="POST">
         {% csrf_token %} 
         <div class="form-group">
-            <label for="exampleInputEmail1">Текст</label>
-            <textarea name = "commentText" value = "" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea name = "commentText" value = "" class="form-control mt-5" id="exampleFormControlTextarea1" rows="3"></textarea>
             <button type="submit" class="btn btn-primary mb-2">Добавить коментарий</button>
         </div>
-
-
+        
+        
         <hr>
-
-
-       <h3>Коменты</h3>
-
-       {% for comment in book.comments.all %}
+        
+        
+        <h3>Коменты</h3>
+        
+        {% for comment in book.comments.all %}
         
         <div class = ''>
-           
+            
             <div class="headings d-flex justify-content-between align-items-center mb-3">
                 <h5>{{ comment.name }} : {{ comment.text }}</h5>
                 <div class="buttons"> <span class="badge bg-white d-flex flex-row align-items-center"> 
-                       
-            </div>
-
-        </div>
-            
-
-       {% endfor %}
-
-
-    </form>
-    
-
-
+                    
+                </div>
+                
+            </div>            
+            {% endfor %}
+        
+        </form>
+    </div>
+        
+        
+   
 
     </div>
   </div>

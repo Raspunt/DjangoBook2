@@ -25,7 +25,7 @@ SECRET_KEY = '=wa9m$*9bj&1en#o5wl3#!c4pz1oz7ik7qnj0srl&og+pu7am^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,9 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_summernote',
     'Polls',
-    'users'
+    'users',
 ]
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,7 +83,7 @@ DATABASES = {
 
         'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangobook3',
+        'NAME': 'djangobook',
         'USER': 'postgres',
         'PASSWORD': 'posty856',
         'HOST': 'localhost',

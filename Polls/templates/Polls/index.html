@@ -19,55 +19,128 @@
 
 
 <form action="/"  class = "fixHeadAndNavBar">
-    <ul class = " LeftNavigation position-fixed ">
+    <ul class = " LeftNavigation  ">
             <input type="text" placeholder="Search.." name="sq">
             <button type="submit"><i class="fa fa-search"></i></button>
     
         <li><button name="genreId" value = "0" class="buttonNavbar" >Все</button></li>   
-        <ul class = 'text-light'>
-          {% recursetree genres %}
-              <li>
-                  <button name = 'genreId'  value = '{{ node.id }}' class = 'buttonNavbar'>  {{ node.title }} </button>
-                  {% if not node.is_leaf_node %}
-                      <ul class="children">
-                          {{ children }} 
-                      </ul>
-                  {% endif %}
-              </li>
-          {% endrecursetree %}
-      </ul>
+
+
+          <ul class = 'text-light'>
+            {% recursetree genres %}
+            <li>
+              <button name = 'genreId'  value = '{{ node.id }}' class = 'buttonNavbar'>  {{ node.title }} </button>
+              {% if not node.is_leaf_node %}
+              <ul class="children">
+                {{ children }} 
+              </ul>
+              {% endif %}
+            </li>
+            {% endrecursetree %}
+          </ul>
+          
+        </div>
+
+
+
         
         
     </ul>
 </form>
 
-  <div class="container">
+  <div class="container ">
+
+
+  <div class="pcVersion">
+
     <h1>{{ NoneInbooks }}</h1>
-    <div class = 'row justify-content-md-center'>
-    {% for book in books %}
-    <div class="card col-3 mb-3 m-2 text-center " >
-      {% if book.image %}
-          <img class="rounded card-img-top " src="{{ book.image.url}}" alt="Card image cap" style="width:100%">
-      {% else %}
+    <div class = 'row justify-content-md-center  '>
+      {% for book in page.object_list %}
+      <div class="card col-3 mb-3 m-2 text-center " >
+        {% if book.image %}
+        <img class="rounded card-img-top " src="{{ book.image.url}}" alt="Card image cap" style="width:100%">
+        {% else %}
         <div class="EmptyImagePlace"></div>
-      {% endif %}
-      <div class="card-body">
-        <h5 class="card-title">Название: {{ book.title }}</h5>
-        <p class="card-text">Описание:{{ book.description|truncatewords:20  }}</p>
-    
-    
-    
-    
-        <p>авторы:</p>
-        {% for auth in book.Author.all %}
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">Название: {{ book.title }}</h5>
+          <p class="card-text">Описание:{{ book.description|truncatewords:20  }}</p>
+          
+          
+          
+          
+          <p>авторы:</p>
+          {% for auth in book.Author.all %}
           <p>{{ auth.Name }}</p>
-        {% endfor %}
-        <a href="/Book/{{book.slug}}" class="btn btn-primary">Подробнее</a>
+          {% endfor %}
+          <a href="/Book/{{book.slug}}" class="btn btn-primary">Подробнее</a>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+  </div>
+
+  <div class="mobileVersion">
+
+    <h1>{{ NoneInbooks }}</h1>
+    <div class = ''>
+      {% for book in page.object_list %}
+      <div class="card  mb-3  text-center " >
+        {% if book.image %}
+        <img class="rounded card-img-top " src="{{ book.image.url}}" alt="Card image cap" style="width:100%">
+        {% else %}
+        <div class="EmptyImagePlace"></div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">Название: {{ book.title }}</h5>
+          <p class="card-text">Описание:{{ book.description|truncatewords:20  }}</p>
+          
+          
+          
+          
+          <p>авторы:</p>
+          {% for auth in book.Author.all %}
+          <p>{{ auth.Name }}</p>
+          {% endfor %}
+          <a href="/Book/{{book.slug}}" class="btn btn-primary">Подробнее</a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
     
+    
+    <form action="" method="GET">
+
+      <div class="text-center mb-3">
+        {% if page.has_previous %}
+        <!-- <a href="/page/{{ page.previous_page_number }}" class="btn btn btn-warning ">Previos Page</a> -->
+        <button class="btn btn-warning" name= "page" value="{{ page.previous_page_number }}" >Previos Page</button>
+        {% endif %}
+        
+        
+        {% for n in numb %}
+        <!-- <a href="/page/{{ n }}" class="btn btn btn-warning ">{{ n }}</a> -->
+        <button class="btn btn-warning" name= "page" value="{{ n }}" >{{ n }}</button>
+        {% endfor %}
+        
+        
+        {% if page.has_next %}
+        <!-- <a href ="/page/{{ page.next_page_number }}  " class="btn btn btn-warning ">Next Page</a> -->
+        <button class="btn btn-warning" name= "page" value="{{ page.next_page_number }}" >Next Page</button>
+        {% endif %}    
+      </div>
+      
+    </form>
+    
+      
+  </div>
+
+
+
+
+
+
+
 
 {% endblock %}

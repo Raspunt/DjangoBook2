@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 from mptt.admin import DraggableMPTTAdmin
 
 
+
 from . models import *
 
 
@@ -27,12 +28,24 @@ class GenreAdmin(DraggableMPTTAdmin):
         "slug":("title",),
     }
 
+
+class AuthorAdmin(admin.ModelAdmin):
+
+
+    prepopulated_fields = {
+        "slug":("Name",),
+    }
+
+
+
+
     
 
 
 
 admin.site.register(Genre,GenreAdmin)
-admin.site.register(Author)
+admin.site.register(Author,AuthorAdmin)
 admin.site.register(Comments)
 admin.site.register(Book,BookAdmin)
+admin.site.register(Rating)
 

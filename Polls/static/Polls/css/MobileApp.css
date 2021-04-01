@@ -1,0 +1,27 @@
+
+@media only screen and (max-width:767px){
+    .pcVersion  {
+      display: none;
+      
+    }
+    .Navlinks {
+        color: white;
+        padding: 0px;
+        font-size:20px; 
+    }
+    .bookMob {
+        font-size:30px;
+    }
+    
+  }
+
+  @media (min-width:767px){
+    .mobileVersion {
+        display: none;
+        
+    }
+    
+
+
+
+  }

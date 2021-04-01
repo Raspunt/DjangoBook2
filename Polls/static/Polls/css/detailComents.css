@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
+
+.comments {
+    margin-top:100px;
+}
+
+
+
+.checked {
+    color: orange;
+}
+
+.BigDiv {
+    font-family: 'Lexend', sans-serif;
+}
+
+.ImageBody {
+    display: grid;
+    order:5 ;
+
+}
+
+.ImageBody > img  {
+    width:400px ;
+    grid-gap:1.5rem;
+}
+
+
+

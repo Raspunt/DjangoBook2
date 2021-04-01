@@ -8,6 +8,19 @@
     margin-left:0px ;
 }
 
+@media only screen and (max-width:1379px){
+
+
+.LeftNavigation {
+    display: none;
+
+    
+}
+
+
+
+}
+
 
 .LeftNavigation li {
     list-style-type: none; 

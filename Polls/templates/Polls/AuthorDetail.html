@@ -1,0 +1,41 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+
+
+
+{% block title %}
+
+    {{ author.Name }}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class = "container">
+    <div class="bg-light mt-3">
+        <div class = 'p-5'>
+           <p> {{ author.Name }} </p>
+            <img src="/media/{{ author.FaceImg }}" alt="" srcset="" class="" style="width:400px;" >
+
+            <hr>
+                <p>{{ author.biog }}</p>
+            <hr>
+            
+            <h3>Книги</h3>
+
+            {% for b in books %}
+
+                <a href="/Book/{{ b.slug }}" class="btn btn-warning">{{ b.title }}</a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
