@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'users',
 ]
 
-X_FRAME_OPTIONS = "SAMEORIGIN"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

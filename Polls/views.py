@@ -1,9 +1,20 @@
 
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from Polls.TelegaFiles.telegaAlert import TelegaBot
+import asyncio
+import logging
+logging.getLogger("asyncio").setLevel(logging.WARNING)
 
 from .  import models 
 from . forms import * 
+
+
+# tel = TelegaBot()
+# tel.start()
+
 
 
 def MainPage(request):
@@ -11,25 +22,31 @@ def MainPage(request):
     sq = request.GET.get('sq')
     pageF = request.GET.get('page')
 
+   
+
     books = models.Book.objects.all()
 
-    bookPagenator = Paginator(books,6)
-    page = bookPagenator.get_page(pageF)
+    #  начало поиска и фильтрации
 
     if genreId != '0' and genreId != None :
         books = models.Book.objects.filter(genreTree = genreId)
-    
+
     else :
         books = models.Book.objects.all()
 
     if sq != '' and sq != None :
         books = models.Book.objects.filter(title__contains = sq)
     
+
+    # Конец
+
+    bookPagenator = Paginator(books,6)
+    page = bookPagenator.get_page(pageF)
+
     numb  = []
     for i in  range(bookPagenator.num_pages) :
         numb.append(i + 1)
 
-    
 
     data = {
         'numb':numb ,
@@ -46,46 +63,69 @@ def MainPage(request):
 def BookDetail(request,BookSlug):
 
     book = models.Book.objects.get(slug = BookSlug)
-
-
     if request.method == 'POST':
-        print(request.user)
-        if  not request.user.is_authenticated:
-            print(request.user.is_authenticated)
+        if  not request.user.is_authenticated:   #  if user not authenticated
             return redirect('/login')
         else :
             Username = request.user
             commentText = request.POST.get('commentText')
-            
-            newComment = models.Comments(name = Username, text = commentText)
-            newComment.save()
-            book.comments.add(newComment)
-            
-            return redirect(f'/Book/{BookSlug}')
 
+            if Username != None and commentText != None :
+                newComment = models.Comments(name = Username, text = commentText)
+                newComment.save()
+                book.comments.add(newComment)
+     
     lis = []
-
-    for i in range(book.rating.stars):
+    for i in range(book.Rewiew.stars):
         lis.append(i)
 
-    print( 5 - len(lis))
-
     unCheckStar = []
-
     for i in range( 5 - len(lis)):
         unCheckStar.append(i)
 
+    if not request.user in book.like.all(): 
+        alreadyLiked = "Лайк уже поставлен"
+    else :
+        alreadyLiked = ''
 
 
 
-    
     return render(request,"Polls/BookDetail.html",
     {
+        'alreadyLiked':alreadyLiked,
         'book':book,
         'CheckStars':lis,
         'UnCheckStars':unCheckStar,
         'CommentText':SummerNoteForComment
     })
+
+
+
+
+
+def LikeButton(request,BookSlug):
+
+    book = models.Book.objects.get(slug = BookSlug)
+    alreadyLiked = "Нету нечего"
+    is_liked = request.POST.get('like')
+
+    
+    print('пост сработал')
+    print("проверка пользователей " + str(book.like.all()))
+
+    if not request.user in book.like.all(): 
+        if is_liked == '1':
+            book.like.add(request.user)
+            print('лайка нашлась')
+        else :
+            print('нет лайки ;(')
+    else :
+        alreadyLiked = "likeC"
+        print("уже лайка есть")
+
+    countLike = book.like.count()
+    return JsonResponse({"data":alreadyLiked,"countLike":countLike})
+
 
 
 
@@ -107,6 +147,7 @@ def AuthorDetail(request,AuthorSlug):
         'author':author,
         'books':books
     })
+
 
 
 

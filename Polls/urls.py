@@ -7,6 +7,8 @@ urlpatterns = [
     path('page/<int:pageId>/',MainPage, name= "HomeUrlWithPage"),
     path('Book/<slug:BookSlug>',BookDetail, name = "DetailBook"),
     path('Author/<slug:AuthorSlug>',AuthorDetail, name = "DetailAuthor"),
-    path('Authors/',AuthorsAll, name = "AllAuthorsUrl")
+    path('Authors/',AuthorsAll, name = "AllAuthorsUrl"),
+    path("Book/<slug:BookSlug>/like/",LikeButton,name = "lileButtonUrl"),
+
 
 ]

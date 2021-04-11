@@ -10,6 +10,15 @@
 {% endblock %}
 
 
+{% block head %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'Polls/css/detailComents.css' %}">
+
+{% endblock %}
+
+
 
 {% block content %}
 
@@ -37,17 +46,22 @@
                         <span class="fa fa-star checked"></span>
                     {% endfor %}
 
+            
                     {% for star in UnCheckStars %}
                         <span class="fa fa-star"></span>
                     {% endfor %}
                 
-                    
-                    <h1 class = 'text-center'>О книге</h1>   
-                    
-                    <hr>
-                    <p>{{ book.description|safe }}</p>
+                    <div class = 'row'>
+                        <div class="bg-success row ml-1">
+                            <h1 class ='likeCount col-1'>{{ book.like.count }}</h1>
+                            <h1>
+                                <i class="col-2 fas fa-thumbs-up"></i>
+                            </h1>
+                        </div>
+                    </div>
 
-                    <hr>
+
+                  
 
                     {% for genre in book.genreTree.all %}
                             <p><i class="far fa-check"></i>  {{ genre.title }}</p>         
@@ -55,23 +69,48 @@
                     {% endfor %}    
                 </div>
                 
-   
-    </div>
-        
-    
-  
-<div class = "comments">
-    <h1>Добавить коментарий </h1>
+                
+            </div>
+            
+            <h1 class = 'text-center'>О книге</h1>   
+            
+            <hr>
+            <p>{{ book.description|safe }}</p>
+            <hr>
+
+        <div class = 'likebuttonDiv'>
+            {% if alreadyLiked != '' %}
+                <button class="likebutton btn btn-outline-success float-right" onclick="Postlike('{{book.slug}}')"><i class="fad fa-thumbs-up"></i> </button>
+            {% else %}
+                <p class ='float-right bg-primary text-warning h3 p-1' style="
+                    text-shadow: 2px 2px #FF0000;
+                    " >
+                    Уже есть лайк
+                </p>
+            {% endif %}
+        </div>
+            
+
+            <div class = "comments">
+    <h1 class = 'text-center'>Добавить коментарий </h1>
     <form action="" method="POST">
         {% csrf_token %} 
         <div class="form-group">
-            <textarea name = "commentText" value = "" class="form-control mt-5" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea name = "commentText" value = "" class="form-control " id="exampleFormControlTextarea1" rows="3"></textarea>
+         
+             
+         
+
+            <br> 
             <button type="submit" class="btn btn-primary mb-2">Добавить коментарий</button>
+     
         </div>
         
         
         <hr>
         
+    </form>
+
         
         <h3>Коменты</h3>
         
@@ -81,14 +120,17 @@
             
             <div class="headings d-flex justify-content-between align-items-center mb-3">
                 <h5>{{ comment.name }} : {{ comment.text }}</h5>
-                <div class="buttons"> <span class="badge bg-white d-flex flex-row align-items-center"> 
+                <div class="buttons"> <span class="badge bg-white d-flex flex-row "></span> 
+                <form action="" method="POST">
+                    {% csrf_token %} 
+                
+                </form>
                     
                 </div>
                 
             </div>            
             {% endfor %}
         
-        </form>
     </div>
         
         

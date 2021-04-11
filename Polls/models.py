@@ -1,5 +1,6 @@
 from django.db import models
 from mptt.models import MPTTModel ,TreeForeignKey , TreeManyToManyField
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 
 class Genre(MPTTModel):
@@ -13,9 +14,27 @@ class Genre(MPTTModel):
 
 
 
+
+class Rewiew(models.Model):
+    title = models.CharField(max_length=100)
+    stars = models.IntegerField()
+
+
+
+    def __str__(self):
+        return str(self.title) + " " + str(self.stars)
+    
+
+
+
 class Comments(models.Model):
     name = models.ForeignKey(User,on_delete=models.CASCADE,blank = True, null= True)
     text = models.TextField(blank = True,db_index = True)
+    like = models.IntegerField(blank=True, null=True)
+    dislike = models.IntegerField(blank=True, null=True)
+
+    
+
 
 
     def __str__(self):
@@ -35,14 +54,6 @@ class Author(models.Model):
         return str(self.Name)
 
 
-class Rating(models.Model):
-    title = models.CharField(max_length=100)
-    stars = models.IntegerField()
-
-
-    def __str__(self):
-        return str(self.title)
-    
     
 
 
@@ -53,8 +64,11 @@ class Book(models.Model):
     slug = models.SlugField(max_length = 150,unique= True)
     image  = models.ImageField(blank=True)
     comments = models.ManyToManyField(Comments,blank = True)
-    rating = models.ForeignKey(Rating, on_delete = models.CASCADE)
+    Rewiew = models.ForeignKey(Rewiew, on_delete = models.CASCADE)
     genreTree = TreeManyToManyField(Genre,related_name='books')
+    like = models.ManyToManyField(User,blank=True,related_name='likes')
+
+    
 
 
 

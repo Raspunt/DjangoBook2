@@ -1,0 +1,121 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+{% block title %}
+
+    Профиль Пользователя
+
+{% endblock %}
+
+
+{% block head %}
+
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'users/userProfile.css' %}">
+
+{% endblock %}
+
+
+{% block content %}
+
+   <div class ="container   mt-5 " >
+
+
+
+        
+        <div class="flex-container">
+
+            <div class="createProf bgProfile profileAdd" onclick="HideProfileCreate()" >
+                <h3 class ='profileText '>Редактировать профиль</h3>  
+            </div>
+            
+            <div class="profileDetail bg-warning profileAdd" onclick="HideProfileDetal()" >
+                <h3 class ='profileText '>Посмотреть профиль</h3>
+            </div>
+            
+        </div>
+        <div class="profileCreate bgProfile" >
+            <form action="" method="POST" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                
+                <div class = "p-3">
+                    <div class="form-group">
+                        <div class = 'text-center'>
+                            {% if  userPr.img  %}
+                            <img id='OpenImgUpload' class="" style="width: 200px;" src="/media/{{ userPr.img }}">
+                            {% else %}
+                            <img id='OpenImgUpload' class="" style="width: 200px;" src="{% static 'users/nope.jpg' %} " >
+                            {% endif %}
+                            <input id ='imgupload'  style="display:none"  name="img" value=""  type="file" class=" form-control "  placeholder="img">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="namefield">Имя</label>
+                        <input  id ='namefield' name="name" value="{{ request.user }}" type="text" class="form-control"  placeholder="name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="desfield">Описание</label>
+                        <input id ="desfield" name='desc' value="{{ userPr.desc }}" type="text" class="form-control"  placeholder="desc">
+                    </div>
+                    
+                    <button class="btn btn-primary m-auto text-center">Обновить</button>
+                </div>
+                
+            </form>
+        </div>
+
+
+        <div class= "profileDetailContent bg-warning mb-2" hidden >
+            <div class="text-center p-3">
+
+                {% if  userPr.img  %}
+                <img id='OpenImgUpload' class="" style="width: 200px;" src="/media/{{ userPr.img }}">
+                {% else %}
+                <img id='OpenImgUpload' class="" style="width: 200px;" src="{% static 'users/nope.jpg' %} " >
+                {% endif %}
+                
+                <h1>{{ userPr.name }}</h1>
+            </div>
+                <hr>
+                <div class="p-3">
+
+                    {% if userPr.desc  %}
+                    <p>{{ userPr.desc }}</p>
+                    {% else %}
+                    <p>Описание нету</p>
+                    {% endif  %}
+
+                </div>
+                
+        </div>
+
+
+
+    </div>
+
+
+{% endblock %}  
+
+
+{% block scripts %}
+
+   <script>
+
+    $('#OpenImgUpload').click(function(){ $('#imgupload').trigger('click'); });
+
+    function HideProfileCreate(){
+        $('.profileCreate').attr("hidden",false);
+        $('.profileDetailContent').attr("hidden",true);
+
+    }
+
+    function HideProfileDetal(){
+        $('.profileCreate').attr("hidden",true);
+        $('.profileDetailContent').attr("hidden",false);
+    }
+
+   </script>
+
+{% endblock %}

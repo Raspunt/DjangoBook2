@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.db import IntegrityError 
+from django.core.exceptions import ObjectDoesNotExist
+from colorama import Fore, Back, Style
+from . models import *
 
 def register(request):
     errorMessage = ''
@@ -31,3 +35,75 @@ def register(request):
 
 
     return render(request,'users/register.html',{'Wrong_Password':errorMessage})
+
+
+
+
+def userProfileTempate(request):
+
+    name = request.POST.get('name')
+    img  = request.FILES.get('img')
+    desc = request.POST.get('desc')
+
+    
+
+
+
+    if request.user.is_authenticated != True:
+        return redirect('/login')
+
+    user = User.objects.get(username=request.user)
+    try :
+
+        userprof = UserProfile.objects.get(name=user) # если нет в базе вызывает ObjectDoesNotExist
+        
+        if request.method == "POST":
+
+            if name != str(request.user):
+                user.username = name
+                user.save()
+                print("изменено имя в бд")
+            if img != '' and img != None:
+                userprof.img = img
+            if desc != '' and desc != None:
+                userprof.desc = desc 
+
+            userprof.save()
+                
+                
+
+
+
+        data = {
+            'user':user,
+            'userPr':userprof
+        }
+        return render(request,"users/userDetail.html",data)
+        
+
+
+
+    except ObjectDoesNotExist as e:
+        print(Fore.RED +"Нету профиля  ObjectDoesNotExist")
+        data = {}
+
+        if request.method == "POST":
+            
+
+            
+            newuserprof = UserProfile.objects.create(name=user,desc=desc,img=img,rating=100.0)
+
+            newuserprof.name = user
+            newuserprof.desc = desc
+            newuserprof.img = img
+            newuserprof.rating = 100.0
+
+
+            data['userPr'] = newuserprof
+        
+        data['user'] = user
+        
+
+
+ 
+        return render(request,"users/userDetail.html",data)
