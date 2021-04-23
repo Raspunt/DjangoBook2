@@ -1,7 +1,9 @@
 from django.db import models
 from mptt.models import MPTTModel ,TreeForeignKey , TreeManyToManyField
-from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
+from users.models import UserProfile
+
+from django.urls import reverse
 
 class Genre(MPTTModel):
     title = models.CharField(max_length = 300)
@@ -28,12 +30,10 @@ class Rewiew(models.Model):
 
 
 class Comments(models.Model):
-    name = models.ForeignKey(User,on_delete=models.CASCADE,blank = True, null= True)
-    text = models.TextField(blank = True,db_index = True)
-    like = models.IntegerField(blank=True, null=True)
-    dislike = models.IntegerField(blank=True, null=True)
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE,blank = True, null= True)
+    name = models.ForeignKey(UserProfile,on_delete=models.CASCADE,blank = True, null= True)
+    text = models.TextField(blank = True,db_index = True,max_length=1000)
 
-    
 
 
 
@@ -69,6 +69,7 @@ class Book(models.Model):
     like = models.ManyToManyField(User,blank=True,related_name='likes')
 
     
+
 
 
 

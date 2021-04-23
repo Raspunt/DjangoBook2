@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.db import IntegrityError 
-from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError ,DataError
+from django.core.exceptions import ObjectDoesNotExist 
+
 from colorama import Fore, Back, Style
 from . models import *
 
@@ -49,13 +50,14 @@ def userProfileTempate(request):
 
 
 
-    if request.user.is_authenticated != True:
+    if not request.user.is_authenticated :
         return redirect('/login')
 
     user = User.objects.get(username=request.user)
     try :
 
         userprof = UserProfile.objects.get(name=user) # если нет в базе вызывает ObjectDoesNotExist
+        TextSoLong = ''
         
         if request.method == "POST":
 
@@ -65,8 +67,14 @@ def userProfileTempate(request):
                 print("изменено имя в бд")
             if img != '' and img != None:
                 userprof.img = img
-            if desc != '' and desc != None:
-                userprof.desc = desc 
+
+            if len(desc) <= 1000:
+                if desc != '' and desc != None :
+                    userprof.desc = desc 
+            else:
+                TextSoLong = 'Ну ты стихоплет может немного по меньше текста а? меньше слов ты попробуй!'
+            
+
 
             userprof.save()
                 
@@ -76,8 +84,11 @@ def userProfileTempate(request):
 
         data = {
             'user':user,
-            'userPr':userprof
+            'userPr':userprof,
+            'TextSoLong':TextSoLong
         }
+
+
         return render(request,"users/userDetail.html",data)
         
 
@@ -107,3 +118,19 @@ def userProfileTempate(request):
 
  
         return render(request,"users/userDetail.html",data)
+    
+    
+
+
+
+def AnotherUserProfile(request,userid):
+
+    myuser = User.objects.get(id=userid)
+    userprofile = UserProfile.objects.get(name=myuser)
+
+    return render(request,'users/AhotherUserProfile.html',
+    {
+        'userPr':userprofile,
+        'user':myuser
+    })
+

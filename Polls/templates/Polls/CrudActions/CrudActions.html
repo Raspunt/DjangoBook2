@@ -1,0 +1,41 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+
+
+
+{% block title %}
+
+    Круд
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class = 'd-flex flex-column container bg-white mt-5'>
+
+    <a href="{% url  'createBookUrl' %}" class ='btn btn-outline-dark p-3'>добавить</a>
+    
+    <div class = "p-1 ">
+        
+        {% for book in books %}
+        
+        <div class="row">
+            
+            <p class = " col-sm m-4">  {{ book.title }} </p>
+        
+            <a href="{% url  'UpdateBookUrl' book.id %}"  class ='col btn btn-outline-success m-4 p-3'>изменить</a>
+            <a href="{% url  'DeleteBookUrl' book.slug %}"  class = 'col btn btn btn-outline-danger  m-4'>удалить</a>
+            
+            
+            <img src="/media/{{ book.image }}" alt="" style ="width:100px; height:100px;" class="float-right">
+            
+        </div>
+        <hr>
+        {% endfor %}
+        
+    </div>
+</div>
+
+
+{% endblock %}

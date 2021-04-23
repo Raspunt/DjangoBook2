@@ -60,7 +60,7 @@
       {% for book in page.object_list %}
       <div class="card col-3 mb-3 m-2 text-center " >
         {% if book.image %}
-        <img class="rounded card-img-top " src="{{ book.image.url}}" alt="Card image cap" style="width:100%">
+        <img class="rounded card-img-top w-100" src="{{ book.image.url}}"  style="width: 200px;">
         {% else %}
         <div class="EmptyImagePlace"></div>
         {% endif %}
@@ -112,9 +112,11 @@
   </div>
     
     
+  {% if page %}
     <form action="" method="GET">
 
       <div class="text-center mb-3">
+
         {% if page.has_previous %}
         <!-- <a href="/page/{{ page.previous_page_number }}" class="btn btn btn-warning ">Previos Page</a> -->
         <button class="btn btn-warning" name= "page" value="{{ page.previous_page_number }}" >Previos Page</button>
@@ -134,7 +136,7 @@
       </div>
       
     </form>
-    
+  {% endif %}  
       
   </div>
 

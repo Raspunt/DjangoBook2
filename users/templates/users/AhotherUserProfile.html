@@ -1,0 +1,71 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+{% block title %}
+
+    Профиль Пользователя
+
+{% endblock %}
+
+
+{% block head %}
+
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'users/userProfile.css' %}">
+
+{% endblock %}
+
+
+{% block content %}
+
+   <div class ="container   mt-5 " >
+
+
+
+        
+        
+        <div class="profileCreate bg-warning" >
+            
+                
+                {% csrf_token %}
+                
+                <div class = "p-3">
+                    <div class="form-group">
+                        <div class = 'text-center'>
+                            {% if  userPr.img  %}
+                            <img id='OpenImgUpload' class="" style="width: 200px;" src="/media/{{ userPr.img }}">
+                            {% else %}
+                            <img id='OpenImgUpload' class="" style="width: 200px;" src="{% static 'users/nope.jpg' %} " >
+                            {% endif %}
+                            <input id ='imgupload'  style="display:none"  name="img" value=""  type="file" class=" form-control "  placeholder="img">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                       
+                        <p  class="text-center h3" >{{ userPr.name }} </p>
+                    </div>
+                    <hr>                    
+                    <div class="form-group">
+
+                        <p> {{ userPr.desc  }} </p>
+                    </div>
+                    
+                   
+                </div>
+        </div>
+
+
+       
+
+
+
+    </div>
+
+
+{% endblock %}  
+
+
+{% block scripts %}
+
+
+{% endblock %}

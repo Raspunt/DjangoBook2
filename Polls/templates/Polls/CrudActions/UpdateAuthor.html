@@ -1,0 +1,53 @@
+{% extends 'Polls/blocks/MainBlock.html'  %}
+
+
+
+
+{% block title %}
+
+    Круд - Обновить оисание Автора
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class = 'container bg-white mt-4'>
+    
+    {% load static %}
+    {% load crispy_forms_tags %}
+
+    <h3 class = "text-center">Изменить книгу</h3>
+   
+
+    {% if request.user.is_superuser  != False %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-primary" type="submit" value="Обновить">
+    </form>
+
+{% else %}
+    <div class = 'bg-white'>
+        
+        <img class= "rounded mx-auto d-block" src="{% static 'Polls/images/bulder.jpeg' %}" alt="">
+            
+            <h1>Cтраница недоступна</h1>
+            <h4>Сайт активно разрабатывается</h4>
+
+
+    </div>
+
+
+{% endif %}
+
+
+    
+
+
+</div>
+
+
+
+{% endblock %}

@@ -56,9 +56,12 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="desfield">Описание</label>
-                        <input id ="desfield" name='desc' value="{{ userPr.desc }}" type="text" class="form-control"  placeholder="desc">
+                        <label for="desfield">Описание {{ TextSoLong }}</label>
+                        <textarea id = 'desc' onchange="LenString()" onkeyup="LenString()" class="form-control " name='desc' value="" >{{  userPr.desc }}</textarea>
                     </div>
+
+                    <p class='descLen' value='Количество букв в слове'></p> 
+                           
                     
                     <button class="btn btn-primary m-auto text-center">Обновить</button>
                 </div>
@@ -87,6 +90,7 @@
                     <p>Описание нету</p>
                     {% endif  %}
 
+    
                 </div>
                 
         </div>
@@ -115,6 +119,34 @@
         $('.profileCreate').attr("hidden",true);
         $('.profileDetailContent').attr("hidden",false);
     }
+
+    
+    let count  = 0
+    let descWithoutSpace = '';
+    function LenString(){  
+        let desc = $('#desc').val()
+        let descWithoutSpace = desc.replace(/\s+/g, '')
+        let ld = descWithoutSpace.split('')
+        let ld2 = desc.split('');
+
+        
+
+        let lenDesc = ld.length;
+        let lenDescWithSpace = ld2.length;
+
+
+        if (lenDescWithSpace <= 1000){
+            $('.descLen').text(`Букв в тексте: ${lenDesc} из 1000`)
+        }else{
+            $('.descLen').text(`Букв в тексте: ${lenDesc} Много текста!!!`)
+
+            if (count == 0){
+                alert('Много текста!!! Текст будет не сохранен')
+                count++;
+            }
+        }
+    }
+
 
    </script>
 

@@ -53,6 +53,8 @@ class AuthorAdmin(admin.ModelAdmin):
     }
 
 
+class CommentsAdmin(admin.ModelAdmin):
+    list_display = ('user_id','name')
 
     
 
@@ -60,7 +62,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 admin.site.register(Genre,GenreAdmin)
 admin.site.register(Author,AuthorAdmin)
-admin.site.register(Comments)
+admin.site.register(Comments,CommentsAdmin)
 admin.site.register(Book,BookAdmin)
 admin.site.register(Rewiew)
 

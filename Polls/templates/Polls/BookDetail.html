@@ -15,6 +15,9 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'Polls/css/detailComents.css' %}">
+<link rel="stylesheet" href="{% static 'Polls/css/avatarComment.css' %}">
+
+
 
 {% endblock %}
 
@@ -96,11 +99,10 @@
     <form action="" method="POST">
         {% csrf_token %} 
         <div class="form-group">
-            <textarea name = "commentText" value = "" class="form-control " id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea name = "commentText" value = "" class="form-control" id ='commentText' onkeyup= "CheckText()"  onchange="CheckText()"  id="exampleFormControlTextarea1" rows="3"></textarea>
          
-             
-         
-
+            <p id ='CountLetters'></p>     
+        
             <br> 
             <button type="submit" class="btn btn-primary mb-2">Добавить коментарий</button>
      
@@ -118,15 +120,16 @@
         
         <div class = ''>
             
+            
+           <a href="/User/{{ comment.user_id.id  }}/Profile/" class ='text-dark linkComment container'>
             <div class="headings d-flex justify-content-between align-items-center mb-3">
-                <h5>{{ comment.name }} : {{ comment.text }}</h5>
-                <div class="buttons"> <span class="badge bg-white d-flex flex-row "></span> 
-                <form action="" method="POST">
-                    {% csrf_token %} 
+                {% if comment.name.img %}
+                <h5><img src="/media/{{ comment.name.img  }}" class= 'avatarComment'>  {{ comment.name }} : {{ comment.text }} </h5>
+                {% else %}
+                <h5><img src="/media/flat750x075f-pad750x1000f8f8f8.u1.jpg" class= 'avatarComment'>  {{ comment.name }} : {{ comment.text }}</h5>
+                {% endif %}
                 
-                </form>
-                    
-                </div>
+            </a> 
                 
             </div>            
             {% endfor %}
@@ -140,3 +143,34 @@
   </div>
 
 {% endblock %}
+
+
+{% block scripts %}
+
+  <script>
+
+      
+      function CheckText(){
+        let desc = $('#commentText').val()
+        let ld = desc.split('')
+        let lenDesc = ld.length;
+        
+        if (lenDesc > 300){
+            console.log(lenDesc);
+            $('#CountLetters').text(`Букв в тексте: ${lenDesc} из 1000 Многовато не будет сохранено`)
+        }
+        $('#CountLetters').text(`Букв в тексте: ${lenDesc} из 1000`)
+
+
+    }
+
+
+
+
+  </script>
+
+
+
+
+{% endblock %}
+
